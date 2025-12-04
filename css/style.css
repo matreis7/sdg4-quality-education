@@ -676,13 +676,15 @@ Author: Savio Miano*/
 /* =================================================
 		Student: Matheus Borges Mota Reis 
 
-		Pages owned: index.html (Home), resources.html (Resources)
+		Pages owned: 
+		- index.html (Home)
+		- resources.html (Resources)
 
 		Note: Selectors scoped with .page-home / .page-resources 
 		or mt- classes
    ================================================= */
 
-/* Tokens */
+/* ------------------- Tokens ------------------- */
 
 :root {
 	/* SDG 4 colour family */
@@ -697,9 +699,12 @@ Author: Savio Miano*/
 	/* Reusable radius & shadow*/
 	--mt-radius-lg: 1rem;
 	--mt-shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+	/* Wheel size (desktop) */
+	--mt-wheel-size: 32rem;
 }
 
-/* Base */
+/* ------------------- Base & Typography ------------------- */
 
 .mtBody{
 	font-family: "Open Sans", sans-serif;
@@ -708,11 +713,68 @@ Author: Savio Miano*/
 	background-color: #fff;
 }
 
-.project-heading{
+/* Main page heading */
+.mt-main-heading{
 	font-family: "Anton", sans-serif;
 	line-height: 1.1;
 	letter-spacing: .5px;
 	text-transform: uppercase;
+}
+
+/* Reusable button */
+.mt-btn{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1.5px solid var(--mt-sdg4);
+	background-color: var(--mt-sdg4);
+	color: #fff;
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	text-decoration: none;
+	padding: 0.75rem 1.8rem;
+	transition: 
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.mt-btn:hover,
+.mt-btn:focus-visible{
+	background-color: rgba(0, 0, 0, 0.25);
+	border-color: var(--mt-sdg4);
+	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+	outline: none;
+}
+
+.mt-btn:active{
+	transform: translateY(0);
+	box-shadow: 0 5px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Larger button */
+.mt-btn-large{
+	padding: 0.9rem 2.5rem;
+}
+
+/* Full-width button */
+.mt-btn-full{
+	width: 100%;
+}
+
+/* Wheels labels */
+.mt-wheel-label{
+	font-family: "Anton", sans-serif;
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	text-align: center;
 }
 
 /* Mobile: Headings */
@@ -723,39 +785,55 @@ Author: Savio Miano*/
 	}
 }
 
+/* ------------------- Layout base ------------------- */
+
+.mt-main-body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 /* =========================== HOME PAGE: Hero =========================== */
 
 .page-home .mt-hero-sdg4{
 	position: relative;
-	padding-block: 3rem;
+	min-height: 70vh;
+	display: flex;
+	align-items: center;
+	background-image: 
+		linear-gradient(120deg, rgba(0, 0, 0, 0.6), 
+		rgba(0, 0, 0, 0.3)), 
+		url("../img/matheus/childrenPlaying.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding-bottom: 6rem;
 }
 
-/* Soft diagonal background */
-.page-home .mt-hero-sdg4::before{
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		135deg,
-		var(--mt-sdg4-soft) 0%,
-		#ffffff 40%,
-		#ffffff 100%
-	);
-	z-index: -1;
+.page-home .mt-hero-sdg4 h1{
+	color: #ffffff;
 }
 
-/* <p> above H1 */
+.page-home .mt-hero-txt{
+	color: #ffffff;
+	opacity: 0.7;
+	max-width: 32rem;
+}
+
+/* Eyebrow label above H1 */
 .page-home .mt-hero-eyebrow{
 	font-size: 0.85rem;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.15em;
-	color:  var(--mt-sdg4);
-	margin-bottom: 0.5rem;
+	/*background-color:  var(--mt-sdg4);*/
+	color: #fff;
+	display: inline-block;
+	padding: 0.35rem 0.75rem;
+	border-radius: 999px;
 }
 
-/* Keep the heading bold */
-
+/* heading inside home page */
 .page-home h1,
 .page-home h2,
 .page-home h3{
@@ -764,32 +842,147 @@ Author: Savio Miano*/
 	letter-spacing: 0.03em;
 }
 
-/* Buttons */
-.page-home .mt-btn{
+/* Wheel overlaying hero + next section */
+.page-home .mt-wheel-section{
+	position: absolute;
+	right: 4%;
+	bottom: -5rem;
+	display: flex;
+	justify-content: center;
+	pointer-events: auto;
+}
+
+/* ===========================  HOME PAGE: WHEEL ===========================  */
+/* --------- Ideaa adapted from COdePen example by Felipe Mendez: 
+	  ref: https://codepen.io/felipemendez/pen/nqMaKY?editors=1100 --------- */
+
+/* Wheel container */
+.mt-sdg-wheel{
+	position: relative;
+	width: var(--mt-wheel-size); 				
+	height: var(--mt-wheel-size);
+}
+
+/* Center the label inside the wheel */
+.mt-sdg-wheel-center{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); /* moves its own center to that position */
+	text-align: center;
+	color: #fff;
+	padding: 1rem 1.5rem;
 	border-radius: 999px;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	font-weight: 600;
-	background-color:  var(--mt-sdg4);
-	border-color: var(--mt-sdg4);
+	background-color: transparent;
 }
 
-.page-home .mt-btn:hover,
-.page-home .mt-btn:focus{
-	background-color: var(--mt-sdg4-dark);
-	border-color: var(--mt-sdg4-dark);
+/* UL: Circular orbit */
+.mt-sdg-wheel-orbit{
+	position: relative;
+	overflow: hidden;
+	border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	list-style: none;
+	animation: mtWheelSpin 40s linear infinite; 
+	transform-origin: 50% 50%;
 }
 
-/* Hero image */
-.page-home .mt-hero-media{
-	border-radius: var(--mt-radius-lg);
-	box-shadow: var(--mt-shadow-soft);
+/* LI: slices */
+.mt-sdg-wheel-orbit li{
+	position: absolute;
+	overflow: hidden;
+	left: 50%;
+	top: 50%;
+
+	margin-left: calc(-1 * var(--mt-wheel-size) / 2);
+	margin-top: calc(-1 * var(--mt-wheel-size) / 2);
+
+	width: calc(var(--mt-wheel-size) / 2);
+	height: calc(var(--mt-wheel-size) / 2);
+
+	transform-origin: 100% 100%;
+	-ms-transform-origin: 100% 100%;
+	-webkit-transform-origin: 100% 100%;
+}
+
+/* A: content inside slice */
+.mt-sdg-wheel-orbit li .mt-sdg-wheel-item{
+	-webkit-transform: skew(-50deg) rotate(-70deg) scale(1);
+	transform: skew(-50deg) rotate(-70deg) scale(1);
+
+	color: #fff;
+	line-height: 14px;
+	text-transform: capitalize;
+	text-decoration: none;
+	text-align: center;
+	padding-top: 1.8em;
+	position: absolute;
+
+	width: var(--mt-wheel-size);
+	height: var(--mt-wheel-size);
+
+	margin-left: calc(-1 * var(--mt-wheel-size) / 4);
+
+	left: 50%;
+	top: 0;
+
+	/* interactivity */
+	cursor: pointer;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease,
+		filter 0.2s ease;
+}
+
+/* On hover: higlight the slice */
+.mt-sdg-wheel-orbit li .mt-sdg-wheel-item:hover,
+.mt-sdg-wheel-orbit li .mt-sdg-wheel-item:focus-visible{
+	-webkit-transform: skew(-50deg) rotate(-70deg) scale(1.06);
+	transform: skew(-50deg) rotate(-70deg) scale(1.06);
+
+	box-shadow: 
+		0 0 0 4px #ffffff,
+		0 10px 25px rgba(0,0,0,0.45);
+
+	filter: brightness(1.15);
+}
+
+/* On click: feedback */
+.mt-sdg-wheel-orbit li .mt-sdg-wheel-item:active{
+	-webkit-transform: skew(-50deg) rotate(-70deg) scale(0.98);
+	transform: skew(-50deg) rotate(-70deg) scale(0.98);
+
+	box-shadow: 
+		0 0 0 4px #ffffff,
+		0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* Keyframes for the slow spin of the whole wheel */
+@keyframes mtWheelSpin{
+	from{transform: rotate(0deg);}
+	to{transform: rotate(360deg);}
+}
+
+/* Mobile */
+@media (max-width: 576px){
+	.mt-sdg-wheel{
+		width: 16rem;
+		height: 16rem;
+	}
+	.page-home .mt-wheel-section{
+		position: static;
+		margin-top: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
 }
 
 /* Mobile Hero*/
-@media (max-width: 768px){
-	.page-home .mt-hero-sdg4{
-		padding-block: 2rem;
+@media (max-width: 576px){
+	.page-home .mt-btn{
+		display: block;
+		width: 100%;
+		margin-left: 0;
 	}
 }
 
@@ -798,17 +991,133 @@ Author: Savio Miano*/
 .page-home .mt-section-sdg4{
 	border-top: 1px solid #e5e5e5;
 	border-bottom: 1px solid #e5e5e5;
+	padding-block: 3.5rem;
+	background-color: #ffffff;
 }
 
 .page-home .mt-section-sdg4 h2{
-	font-size: 2rem;
+	font-size: 2.1rem;
+	margin-bottom: 0.75rem;
+}
+
+/* Small label above heading */
+.mt-section-eyebrow{
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--mt-sdg4);
+	margin-bottom: 0.35rem;
+}
+
+.page-home .mt-section-sdg4 p,
+.mt-section-body{
+	color: var(--mt-gray-700);
+	font-size: 0.97rem;
+	line-height: 1.8;
+}
+
+/* Bullet list */
+.mt-section-list{
+	padding-left: 1.2rem;
+	margin-bottom: 1.5rem;
+}
+
+.mt-section-list li{
+	color: var(--mt-gray-700);
+	font-size: 0.95rem;
+	line-height: 1.7;
+	margin-bottom: 0.4rem;
+}
+
+/* card that wraps the image + button */
+.mt-section-card{
+	background-color: #ffffff;
+	border-radius: var(--mt-radius-lg);
+	box-shadow: var(--mt-shadow-soft);
+	padding: 0.75rem;
+}
+
+.mt-section-lead{
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: #222;
 	margin-bottom: 1rem;
 }
 
-.page-home .mt-section-sdg4 p{
-	color: var(--mt-gray-700);
-	font-size: 0,98rem;
+.mt-section-card{
+	background-color: #000;
+	border-radius: var(--mt-radius-lg);
+	box-shadow: var(--mt-sdg4-soft);
+	padding: 0;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Image of student */
+.mt-sdg4-img{
+	display: block;
+	width: 100%;
+	height: auto;
+	filter: brightness(0.9);
+}
+
+/* CTA Button */
+.mt-img-cta-btn{
+	margin-top: 1rem;
+}
+
+/* =========================== HOME PAGE: Stastitic =========================== */
+
+.mt-statistic-strip{
+	background: radial-gradient(
+		circle at top left, 
+		var(--mt-gray-700) 0%, 
+		#111111 45%, 
+		#000000 100%
+	);
+	color: #fff;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+.mt-statistic-number{
+	font-size: 3rem;
+	letter-spacing: 0.06em;
+}
+
+.mt-statistic-txt{
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 0.95rem;
 	line-height: 1.7;
+	margin: 0.75rem 0 0.5rem;
+}
+
+.mt-statistic-link{
+	display: inline-block;
+	color: #fff;
+	font-size: 0.85rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	font-weight: 600;
+	opacity: 0.8;
+}
+
+.mt-statistic-link:hover,
+.mt-statistic-link:focus{
+	opacity: 1;
+	text-decoration: underline;
+}
+
+@media (min-width: 992px){
+	.mt-statistic-strip .col-lg-4{
+		border-right: 1px solid rgba(255, 255, 255, 0.16);
+	}
+
+	.mt-statistic-strip .col-lg-4:last-child{
+		border-right: none;
+	}
 }
 
 /* =========================== HOME PAGE: Targets =========================== */
@@ -817,7 +1126,7 @@ Author: Savio Miano*/
 	background-color: #fafafa;
 	border-radius: var(--mt-radius-lg);
 	padding-inline: 1.5rem;
-	padding-block: 2rem;
+	padding-block: 2.5rem;
 }
 
 .page-home .mt-section-targets > h3{
@@ -825,6 +1134,44 @@ Author: Savio Miano*/
 	margin-bottom: 2rem;
 }
 
+/* Card that wraps each target img */
+.mt-target-card{
+	background-color: #ffffff;
+	border-radius: var(--mt-radius-lg);
+	box-shadow: var(--mt-shadow-soft);
+	padding: 0.75rem;
+}
+
+/* Label "Target 4.1" etc. */
+.mt-target-label{
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	color: var(--mt-sdg4);
+	margin-bottom: 0.2rem;
+}
+
+/* Short Summary */
+.mt-target-summary{
+	font-size: 1.2rem;
+	margin-bottom: 0.75rem;
+}
+
+/* List under each target */
+.mt-target-list{
+	padding-left: 1.1rem;
+	margin-bottom: 0;
+}
+
+.mt-target-list li{
+	color: var(--mt-gray-700);
+	font-size: 0.93rem;
+	line-height: 1.7;
+	margin-bottom: 0.35rem;
+}
+
+/* Divider between targets */
 .page-home .mt-target{
 	padding-bottom: 2rem;
 	margin-bottom: 2rem;
@@ -835,13 +1182,6 @@ Author: Savio Miano*/
 	border-bottom: none;
 	margin-bottom: 0;
 	padding-bottom: 0;
-}
-
-/* Image */
-
-.page-home mt.target.ratio-1X1{
-	background-color: #ffffff;
-	box-shadow: var(--mt-shadow-soft);
 }
 
 /* Text */
@@ -860,6 +1200,15 @@ Author: Savio Miano*/
 
 /* =========================== RESOURCES =========================== */
 
+/* Keep the heading bold */
+.page-resources h1,
+.page-resources h2,
+.page-resources h3{
+	font-family: "Anton",sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
 .page-resources{
 	background-color: #ffffff;
 }
@@ -868,8 +1217,17 @@ Author: Savio Miano*/
 	max-width: 960px;
 }
 
+/* Buttons */
+
+.page-resources .mt-btn{
+	border-radius: 999px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 600;
+}
 
 /* Main Hero */
+
 .page-resources .mt-resources-main h1{
 	font-family: "Anton", sans-serif;
 	text-transform: uppercase;
@@ -894,13 +1252,17 @@ Author: Savio Miano*/
 }
 
 .page-resources .mt-resources-main .btn.btn-dark{
-	background-color: var(--mt-sdg4);
-	border-color: var(--mt-sdg4);
+	background-color: var(--mt-gray-900);
+	border-color: var(--mt-gray-700);
 }
 
 .page-resources .mt-resources-main .btn.btn-dark:hover{
 	background-color: var(--mt-sdg4-dark);
 	border-color: var(--mt-sdg4-dark);
+}
+
+.mt-search-bar{
+	max-width: 380px;
 }
 
 /* Grid Cards */
@@ -931,8 +1293,8 @@ Author: Savio Miano*/
 }
 
 .page-resources button[type="submit"]{
-	background-color: var(--mt-sdg4);
-	border-color: var(--mt-sdg4);
+	background-color: var(--mt-gray-900);
+	border-color: var(--mt-gray-900);
 }
 
 .page-resources button[type="submit"]:hover{
