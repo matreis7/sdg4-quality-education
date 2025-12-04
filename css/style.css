@@ -680,8 +680,11 @@ Author: Savio Miano*/
 		- index.html (Home)
 		- resources.html (Resources)
 
-		Note: Selectors scoped with .page-home / .page-resources 
-		or mt- classes
+		Pattern:
+		- Global tokens + base styles
+		- Home-specific: .page-home...
+		- Resources-specific: .page-resources...
+		- Reusable components: .mt-*
    ================================================= */
 
 /* ------------------- Tokens ------------------- */
@@ -777,14 +780,6 @@ Author: Savio Miano*/
 	text-align: center;
 }
 
-/* Mobile: Headings */
-@media (max-width:576px){
-	h1.display-4.project-heading,
-	h1.display-6.project-heading{
-		font-size: 2rem
-	}
-}
-
 /* ------------------- Layout base ------------------- */
 
 .mt-main-body{
@@ -810,30 +805,31 @@ Author: Savio Miano*/
 	padding-bottom: 6rem;
 }
 
+/* Ensure hero heading is white */
 .page-home .mt-hero-sdg4 h1{
 	color: #ffffff;
 }
 
+/* Intro text in hero */
 .page-home .mt-hero-txt{
 	color: #ffffff;
 	opacity: 0.7;
 	max-width: 32rem;
 }
 
-/* Eyebrow label above H1 */
+/* Eyebrow label above H1 in hero */
 .page-home .mt-hero-eyebrow{
 	font-size: 0.85rem;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.15em;
-	/*background-color:  var(--mt-sdg4);*/
 	color: #fff;
 	display: inline-block;
 	padding: 0.35rem 0.75rem;
 	border-radius: 999px;
 }
 
-/* heading inside home page */
+/* Any heading inside home page */
 .page-home h1,
 .page-home h2,
 .page-home h3{
@@ -853,8 +849,8 @@ Author: Savio Miano*/
 }
 
 /* ===========================  HOME PAGE: WHEEL ===========================  */
-/* --------- Ideaa adapted from COdePen example by Felipe Mendez: 
-	  ref: https://codepen.io/felipemendez/pen/nqMaKY?editors=1100 --------- */
+/* --------- Idea adapted from COdePen example by Felipe Mendez: 
+	 https://codepen.io/felipemendez/pen/nqMaKY?editors=1100 --------- */
 
 /* Wheel container */
 .mt-sdg-wheel{
@@ -902,13 +898,10 @@ Author: Savio Miano*/
 	height: calc(var(--mt-wheel-size) / 2);
 
 	transform-origin: 100% 100%;
-	-ms-transform-origin: 100% 100%;
-	-webkit-transform-origin: 100% 100%;
 }
 
 /* A: content inside slice */
 .mt-sdg-wheel-orbit li .mt-sdg-wheel-item{
-	-webkit-transform: skew(-50deg) rotate(-70deg) scale(1);
 	transform: skew(-50deg) rotate(-70deg) scale(1);
 
 	color: #fff;
@@ -935,24 +928,19 @@ Author: Savio Miano*/
 		filter 0.2s ease;
 }
 
-/* On hover: higlight the slice */
+/* On hover: highlight the slice */
 .mt-sdg-wheel-orbit li .mt-sdg-wheel-item:hover,
 .mt-sdg-wheel-orbit li .mt-sdg-wheel-item:focus-visible{
-	-webkit-transform: skew(-50deg) rotate(-70deg) scale(1.06);
 	transform: skew(-50deg) rotate(-70deg) scale(1.06);
-
 	box-shadow: 
 		0 0 0 4px #ffffff,
 		0 10px 25px rgba(0,0,0,0.45);
-
 	filter: brightness(1.15);
 }
 
 /* On click: feedback */
 .mt-sdg-wheel-orbit li .mt-sdg-wheel-item:active{
-	-webkit-transform: skew(-50deg) rotate(-70deg) scale(0.98);
 	transform: skew(-50deg) rotate(-70deg) scale(0.98);
-
 	box-shadow: 
 		0 0 0 4px #ffffff,
 		0 10px 25px rgba(0,0,0,0.35);
@@ -964,7 +952,7 @@ Author: Savio Miano*/
 	to{transform: rotate(360deg);}
 }
 
-/* Mobile */
+/* Mobile: smaller wheel + no overlap */
 @media (max-width: 576px){
 	.mt-sdg-wheel{
 		width: 16rem;
@@ -977,7 +965,7 @@ Author: Savio Miano*/
 	}
 }
 
-/* Mobile Hero*/
+/* Mobile Hero: stack buttons full width */
 @media (max-width: 576px){
 	.page-home .mt-btn{
 		display: block;
@@ -1209,24 +1197,17 @@ Author: Savio Miano*/
 	letter-spacing: 0.03em;
 }
 
+/* Base background */
 .page-resources{
 	background-color: #ffffff;
 }
 
+/* Narrower Column */
 .page-resources .mt-resources-main{
 	max-width: 960px;
 }
 
-/* Buttons */
-
-.page-resources .mt-btn{
-	border-radius: 999px;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	font-weight: 600;
-}
-
-/* Main Hero */
+/* Hero h1 headings */
 
 .page-resources .mt-resources-main h1{
 	font-family: "Anton", sans-serif;
@@ -1235,11 +1216,12 @@ Author: Savio Miano*/
 	font-size: 2.25rem;
 }
 
+/* Paragraph colour */
 .page-resources .mt-resources-main p{
 	color: var(--mt-gray-700);
 }
 
-/* Search bar and Buttons */
+/* Search bar */
 
 .page-resources .mt-resources-main .input-group .form-control{
 	border-radius: 999px 0 0 999px;
@@ -1251,47 +1233,64 @@ Author: Savio Miano*/
 	border-color: #ddd;
 }
 
-.page-resources .mt-resources-main .btn.btn-dark{
-	background-color: var(--mt-gray-900);
-	border-color: var(--mt-gray-700);
-}
-
-.page-resources .mt-resources-main .btn.btn-dark:hover{
-	background-color: var(--mt-sdg4-dark);
-	border-color: var(--mt-sdg4-dark);
-}
 
 .mt-search-bar{
 	max-width: 380px;
 }
 
 /* Grid Cards */
-
 .page-resources .mt-resource-card{
 	border-radius: var(--mt-radius-lg);
 	box-shadow: var(--mt-shadow-soft);
 	border: 1px solid #f0f0f0;
-}
-
-.page-resources .mt-card-img{
 	background-color: #ffffff;
 }
 
-/* Title + list */
+.mt-card-img{
+	background-color: #ffffff;
+}
+
+/* Trusted websites section */
 
 .page-resources .border-top.border-2{
 	border-color: var(--mt-sdg4);
 	opacity: 0.7;
 }
 
-.page-resources h2{
-	font-family: "Anton", sans-serif;
+/* Eyebrow (reused from home) */
+.page-resources .mt-section-eyebrow{
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--mt-sdg4);
 }
 
+/* Card headings (links) */
+.page-resources .mt-resource-card h3{
+	font-weight: 700;
+}
+
+/* Links */
+.page-resources .mt-resource-link{
+	font-size: 0.85rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	text-decoration: none;
+	color: var(--mt-sdg4);
+}
+
+.page-resources .mt-resource-link:hover{
+	text-decoration: underline;
+}
+
+/* Check box label when checked */
 .page-resources #resourceAgree:checked + label{
 	font-weight: 600;
 }
 
+/* Submit button */
 .page-resources button[type="submit"]{
 	background-color: var(--mt-gray-900);
 	border-color: var(--mt-gray-900);
@@ -1301,6 +1300,16 @@ Author: Savio Miano*/
 	background-color: var(--mt-sdg4-dark);
 	border-color: var(--mt-sdg4-dark);
 }
+
+/* Mobiles */
+@media (max-width: 576px){
+	.page-resources .mt-resources-main{
+		padding-inline: 0.5rem;
+	}
+}
+
+
+
 
 
 
