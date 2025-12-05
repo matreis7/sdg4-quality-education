@@ -107,10 +107,15 @@
 
 /* ------------------- Layout base ------------------- */
 
+.mtBody *,
+.mtBody *::before,
+.mtBody *::after{
+box-sizing: border-box;
+}
+
 .mt-main-body{
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 }
 
 /* =========================== HOME PAGE: Hero =========================== */
@@ -127,7 +132,8 @@
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	padding-bottom: 6rem;
+	padding-bottom: 8rem;
+	z-index: 1;
 }
 
 /* Ensure hero heading is white */
@@ -165,12 +171,10 @@
 
 /* Wheel overlaying hero + next section */
 .page-home .mt-wheel-section{
-	position: absolute;
+	position: static;
 	right: 4%;
-	bottom: -5rem;
-	display: flex;
-	justify-content: center;
-	pointer-events: auto;
+	bottom: 0rem;
+	z-index: 10;
 }
 
 /* ===========================  HOME PAGE: WHEEL ===========================  */
@@ -234,7 +238,7 @@
 	text-transform: capitalize;
 	text-decoration: none;
 	text-align: center;
-	padding-top: 1.8em;
+	padding-top: 3em;
 	position: absolute;
 
 	width: var(--mt-wheel-size);
@@ -275,28 +279,6 @@
 @keyframes mtWheelSpin{
 	from{transform: rotate(0deg);}
 	to{transform: rotate(360deg);}
-}
-
-/* Mobile: smaller wheel + no overlap */
-@media (max-width: 576px){
-	.mt-sdg-wheel{
-		width: 16rem;
-		height: 16rem;
-	}
-	.page-home .mt-wheel-section{
-		position: static;
-		margin-top: 1.5rem;
-		margin-bottom: 1.5rem;
-	}
-}
-
-/* Mobile Hero: stack buttons full width */
-@media (max-width: 576px){
-	.page-home .mt-btn{
-		display: block;
-		width: 100%;
-		margin-left: 0;
-	}
 }
 
 /* =========================== HOME PAGE: What's SDG4? =========================== */
@@ -349,6 +331,8 @@
 	border-radius: var(--mt-radius-lg);
 	box-shadow: var(--mt-shadow-soft);
 	padding: 0.75rem;
+	overflow: hidden;
+	position: relative;
 }
 
 .mt-section-lead{
@@ -356,15 +340,6 @@
 	font-weight: 600;
 	color: #222;
 	margin-bottom: 1rem;
-}
-
-.mt-section-card{
-	background-color: #000;
-	border-radius: var(--mt-radius-lg);
-	box-shadow: var(--mt-sdg4-soft);
-	padding: 0;
-	overflow: hidden;
-	position: relative;
 }
 
 /* Image of student */
@@ -421,16 +396,6 @@
 .mt-statistic-link:focus{
 	opacity: 1;
 	text-decoration: underline;
-}
-
-@media (min-width: 992px){
-	.mt-statistic-strip .col-lg-4{
-		border-right: 1px solid rgba(255, 255, 255, 0.16);
-	}
-
-	.mt-statistic-strip .col-lg-4:last-child{
-		border-right: none;
-	}
 }
 
 /* =========================== HOME PAGE: Targets =========================== */
@@ -527,9 +492,9 @@
 	background-color: #ffffff;
 }
 
-/* Narrower Column */
+/* Centred Column */
 .page-resources .mt-resources-main{
-	/*max-width: 1140px;*/
+	max-width: 1140px;
 	margin-inline: auto;
 }
 
@@ -545,6 +510,7 @@
 /* Paragraph colour */
 .page-resources .mt-resources-main p{
 	color: var(--mt-gray-700);
+	font-size: 0.95rem;
 }
 
 /* Search bar */
@@ -559,17 +525,13 @@
 	border-color: #ddd;
 }
 
-
-.mt-search-bar{
-	max-width: 380px;
-}
-
 /* Grid Cards */
 .page-resources .mt-resource-card{
 	border-radius: var(--mt-radius-lg);
 	box-shadow: var(--mt-shadow-soft);
 	border: 1px solid #f0f0f0;
 	background-color: #ffffff;
+	padding: 1.25rem;
 }
 
 .mt-card-img{
@@ -594,7 +556,9 @@
 
 /* Card headings (links) */
 .page-resources .mt-resource-card h3{
+	font-size: 1rem;
 	font-weight: 700;
+	margin-top: 0.9rem;
 }
 
 /* Links */
@@ -627,28 +591,159 @@
 	border-color: var(--mt-sdg4-dark);
 }
 
-/* Mobiles */
-@media (max-width: 576px){
-	.page-resources .mt-resources-main{
-		padding-inline: 0.5rem;
-	}
+/* Trusted websites */
+.page-resources .mt-trusted-card{
+	background-color: #ffffff;
+	border-radius: var(--mt-radius-lg);
+	box-shadow: var(--mt-shadow-soft);
+	padding: 1.25rem;
+	margin-bottom: 2rem;
+}
+
+.page-resources .mt-trusted-media{
+	flex: 0 0 100%;
+}
+
+.page-resources .mt-trusted-body{
+	flex: 1;
+}
+
+.page-resources #trusted-platforms h3{
+	font-size: 1.3rem;
+	line-height: 1.3;
+	margin-bottom: 0.4rem;
+}
+
+.page-resources #trusted-platforms p{
+	font-size: 1rem;
+	line-height: 1.6;
+	margin-bottom: 32rem;
 }
 
 /* Form */
 
-.input-control .error {
+.mt-input-control .error {
 	color: #dc3545;
 	font-size: 0.8rem;
 	margin-top: 0.25rem;
 	min-height: 1rem;
 }
 
-.input-control.error .form-control,
-.input-control.error textarea {
+.mt-input-control.error .form-control,
+.mt-input-control.error textarea {
 	border-color: #dc3545;
 }
 
-.input-control.success .form-control,
-.input-control.success textarea {
+.mt-input-control.success .form-control,
+.mt-input-control.success textarea {
 	border-color: #198754;
+}
+
+.form-check .error{
+	color: #dc3545;
+	font-size: 0.8rem;
+	margin-top: 0.25rem;
+	min-height: 1rem;
+	display: block;
+}
+
+.form-check.error .form-check-input{
+	outline: 1px solid #dc3545;
+}
+
+/* ============================ BACK TO TOP BUTTON ============================ */
+
+.mt-back-to-top{
+	position: fixed;
+	right: 1.5rem;
+	bottom: 1.5rem;
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: 50%;
+	border: none;
+	background-color: var(--mt-sdg4);
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+	cursor: pointer;
+	z-index: 999;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(10px);
+	transition: 
+		opacity 0.2s ease,
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.mt-back-to-top.show{
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+
+.mt-back-to-top:hover,
+.mt-back-to-top:focus-visible{
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+
+/* ============================ RESPONSIVE ============================ */
+/* MOBILE: phones */
+@media (max-width: 576px){
+
+	/* General layout tweaks */
+	*,
+	*::before,
+	*::after{
+		box-sizing: border-box;
+	}
+
+	.mt-main-body{
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Keep the content away from edges a bit */
+	.page-resources .mt-resources-main, 
+	.page-home .container{
+		padding-inline: 0.75rem;
+	}
+
+	/* Hero */
+	.page-home .mt-hero-sdg4{
+		min-height: auto; 							/* don't force tall hero on phone */
+		padding-block: 3rem 2rem;				/* more breathing room */
+		text-align: left;								
+	}
+
+	.page-home .mt-hero-txt{
+		max-width: 100%;
+	}
+
+	/* Wheel */
+/*	.mt-sdg-wheel{
+		display: none;
+	}
+
+	.mt-sdg-wheel-center{
+		display: none;
+	}*/
+
+
+	/* Buttons */
+	.page-home .mt-btn,
+	.page-resources .mt-btn{
+		display: block;
+		width: 100%;
+		margin-left: 0;
+	}
+
+	/* Resources */
+	.page-resources .mt-resources-main{
+		padding-inline: 0.5rem;
+	}
 }
