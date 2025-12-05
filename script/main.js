@@ -1,39 +1,6 @@
-// script/main.js
-//page author: Thales Ferrari
-
-//Source: https://stackoverflow.com/questions/31954089/how-can-i-reuse-a-navigation-bar-on-multiple-pages
-//When page finish loading, fetch the html file 
-$(function() {
-	//load the navigation.html into the place holder
-	$("#nav-placeholder").load("navigation.html", function() {
-		//This runs after the navbar was inserted 
-		navbarScrollEffect();
-	});
-	//load the footer.html
-	$("#footer-placeholder").load("footer.html");
-});
-
-
-// Navbar behaviour
-function navbarScrollEffect (){
-	const navEl = document.querySelector(".navbar");
-	if (!navEl) return; // Safety check
-
-	window.addEventListener("scroll", function(){
-		if (window.scrollY >= 56){
-			navEl.classList.add("navbar-scrolled");
-		}else if(window.scrollY < 56){
-			navEl.classList.remove("navbar-scrolled");
-		}
-	});
-};
-
-// Home page 
-
-// Wheel:
+// ===========================  HOME PAGE: Wheel =========================== 
 
 // Evenly slices arround the circle
-
 document.addEventListener("DOMContentLoaded", setupWheelSlices);
 
 function setupWheelSlices() {
@@ -85,6 +52,117 @@ function setupWheelSlices() {
 }
 
 
-// Resources Page 
+// =========================== RESOURCES: Form ===========================
+// ref https://codepen.io/javascriptacademy-stash/pen/oNeNMNR
 
-// Form
+const form = document.getElementById('mt-rsc-form');
+const resourceTitle = document.getElementById('resourceTitle');
+const resourceType = document.getElementById('resourceType');
+const resourceLink = document.getElementById('resourceLink');
+const resourceAuthor = document.getElementById('resourceAuthor');
+const resourceSummary = document.getElementById('resourceSummary');
+const resourceDescription = document.getElementById('resourceDescription');
+
+form.addEventListener(`submit`, e => {
+	const isValid = validateInputs();
+
+	if (!isValid){
+		e.preventDefault();
+	}
+
+	// validateInputs();
+});
+
+const setError = (element, message) => {
+	const inputControl = element.parentElement;
+	const errorDisplay = inputControl.querySelector('.error');
+
+	errorDisplay.innerText = message;
+	inputControl.classList.add('error');
+	inputControl.classList.remove('success');
+}
+
+const setSuccess = element => {
+	const inputControl = element.parentElement;
+	const errorDisplay = inputControl.querySelector('.error');
+
+	errorDisplay.innerText = '';
+	inputControl.classList.add('success');
+	inputControl.classList.remove('error');
+}
+
+const isValidLink = link => {
+	const re = /^(https?:\/\/)[^\s]+$/i;
+    return re.test(String(link).toLowerCase());
+}
+
+const validateInputs = () => {
+	let isFormValid = true;
+
+	const titleValue = resourceTitle.value.trim();
+	const typeValue = resourceType.value.trim();
+	const linkValue = resourceLink.value.trim();
+	const authorValue = resourceAuthor.value.trim();
+	const summaryValue = resourceSummary.value.trim();
+	const descriptionValue = resourceDescription.value.trim();
+
+	// Title
+	if (titleValue === '') {
+		setError(resourceTitle, 'Title is required');
+		isFormValid = false;
+	} else {
+		setSuccess(resourceTitle);
+	}
+
+	// Link
+	if (linkValue === '') {
+		setError(resourceLink, 'Link is required');
+	} else if (!isValidLink(linkValue)) {
+		setError(resourceLink, 'Provide a valid link address');
+		isFormValid = false;
+	} else {
+		setSuccess(resourceLink);
+	}
+
+	// Author
+	if (authorValue === '') {
+		setError(resourceAuthor, 'Author is required');
+		isFormValid = false;
+	} else if (authorValue.length < 2) {
+		setError(resourceAuthor, 'Author / Source must be at least 2 character.');
+		isFormValid = false;
+	} else {
+		setSuccess(resourceAuthor);
+	}
+
+	// Type
+	if (typeValue === ''){
+		setError(resourceType, 'Type is required');
+		isFormValid = false;
+	} else {
+		setSuccess(resourceType);
+	}
+
+	// Summary 
+	if (summaryValue !== '' && summaryValue.length < 10){
+		setError(resourceSummary, 'If you provide a summary, make it at least 10 charcters.');
+		isFormValid = false;
+	} else {
+		setSuccess(resourceSummary);
+	}
+
+	// Description
+	if (descriptionValue !== '' && descriptionValue.length < 20){
+		setError(resourceDescription, 'If you describe it, add a bit more detail (20+ charcters.');
+		isFormValid = false;
+	} else {
+		setSuccess(resourceDescription);
+	}
+
+	// Checkbox
+
+	return isFormValid;
+}
+
+// Search Bar
+
