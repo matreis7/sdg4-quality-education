@@ -5,12 +5,12 @@
 //When page finish loading, fetch the html file 
 $(function() {
 	//load the navigation.html into the place holder
-	$("#nav-placeholder").load("/navigation.html", function() {
+	$("#nav-placeholder").load("./navigation.html", function() {
 		//This function runs after the navbar was inserted 
 		navbarScrollEffect();
 	});
 	//load the footer.html
-	$("#footer-placeholder").load("/footer.html");
+	$("#footer-placeholder").load("./footer.html");
 });
 
 
